@@ -400,8 +400,9 @@ class LdapService
     protected function roleMatchesGroupNames(Role $role, array $groupNames)
     {
         if ($role->external_auth_id) {
-            $externalAuthIds = explode(',', strtolower($role->external_auth_id));
+            $externalAuthIds = explode(',', $role->external_auth_id);
             foreach ($externalAuthIds as $externalAuthId) {
+                $externalAuthId = str_replace(' ', '-', trim(strtolower($externalAuthId)));
                 if (in_array(trim($externalAuthId), $groupNames)) {
                     return true;
                 }
